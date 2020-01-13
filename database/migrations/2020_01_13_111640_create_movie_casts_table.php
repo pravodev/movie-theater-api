@@ -18,6 +18,10 @@ class CreateMovieCastsTable extends Migration
             $table->unsignedBigInteger('movie_id');
             $table->unsignedBigInteger('cast_id');
             $table->timestamps();
+
+
+            $table->foreign('movie_id')->references('id')->on('movies');
+            $table->foreign('cast_id')->references('id')->on('casts');
         });
     }
 
