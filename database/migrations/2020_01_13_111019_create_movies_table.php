@@ -16,6 +16,7 @@ class CreateMoviesTable extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->string('synopsis')->nullable();
             $table->unsignedInteger('rating')->nullable();
             $table->date('release_date');
             $table->unsignedInteger('duration')->comment('duration in minutes');
