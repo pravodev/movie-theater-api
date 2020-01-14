@@ -25,6 +25,11 @@ class ApiController extends Controller
     {
         return $this->resource;
     }
+
+    public function rules()
+    {
+        return [];
+    }
     
     /**
      * Display a listing of the resource.
@@ -44,7 +49,18 @@ class ApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->rules());
+        if(method_exists($this->model, 'createData')){
+            $model = $this->model::createData($request->all());
+        }else{
+            $model = new $this->model;
+            $attributes = $request->only($model->getFillable());
+            $model->fill($attributes);
+            $model->save();
+        }
+        $classResource = $this->getResource();
+
+        return new $classResource($model);
     }
 
     /**
@@ -55,7 +71,9 @@ class ApiController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = $this->getModel()->findOrFail($id);
+        $classResource = $this->getResource();
+        return new $classResource($model);
     }
 
     /**
