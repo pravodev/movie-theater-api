@@ -10,6 +10,6 @@ class MovieController extends Controller
 {
     public function index(Request $request)
     {
-        return new MovieCollection(Movie::getData()->paginate());
+        return new MovieCollection(Movie::paginate());
     }
 }
