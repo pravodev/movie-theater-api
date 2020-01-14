@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\CastResource;
 
 class MovieResource extends JsonResource
 {
@@ -14,6 +15,14 @@ class MovieResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'rating' => $this->rating,
+            'release_date' => $this->release_date,
+            'duration' => convertToHoursMins($this->duration, '%02d hours %02d minutes'),
+            'director' => $this->director,
+            'synopsis' => $this->synopsis,
+            'casts' => CastResource::collection($this->casts)
+        ];
     }
 }
