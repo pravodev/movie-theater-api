@@ -14,6 +14,19 @@ class TheaterResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $data =  parent::toArray($request);
+        $include = request()->query('include');
+
+        switch ($include) {
+            case 'studios':
+                $data['studios'] = $this->studios;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        return $data;
     }
 }

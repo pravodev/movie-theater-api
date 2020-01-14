@@ -14,4 +14,9 @@ class Theater extends Model
         'province',
         'website'
     ];
+
+    public function studios()
+    {
+        return $this->hasMany(TheaterStudio::class);
+    }
 }
