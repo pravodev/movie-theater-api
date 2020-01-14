@@ -9,5 +9,5 @@ use App\Http\Resources\TheaterResource;
 class TheaterController extends ApiController
 {
     protected $model = Theater::class;
-    protected $resources = TheaterResource::class;
+    protected $resource = TheaterResource::class;
 }
