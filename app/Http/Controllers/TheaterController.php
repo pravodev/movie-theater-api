@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Theater;
 use App\Http\Resources\TheaterResource;
 
-class TheaterController extends Controller
+class TheaterController extends ApiController
 {
     protected $model = Theater::class;
     protected $resource = TheaterResource::class;
