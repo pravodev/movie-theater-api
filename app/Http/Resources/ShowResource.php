@@ -14,6 +14,11 @@ class ShowResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $movie = $this->movie;
+
+        $data =  parent::toArray($request);
+        $data['movie_title'] = $movie->title;
+        $data['movie'] = new MovieResource($movie);
+        return $data;
     }
 }
