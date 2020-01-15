@@ -19,6 +19,24 @@ class ShowResource extends JsonResource
         $data =  parent::toArray($request);
         $data['movie_title'] = $movie->title;
         $data['movie'] = new MovieResource($movie);
+
+        if($include = $request->query('include')){
+            $theaterStudions = $this->theaterStudios;
+            // dd($theaterStudions);
+            switch ($include) {
+                case 'theaters':
+                    $data['theaters'] = TheaterResource::collection($theaterStudions->groupBy('theater_id')->map(function($theaterStudio){
+                        return $theaterStudio->first()->theater;
+                    }));
+                    break;
+                case 'studios':
+                    $data['studios'] = ShowTheaterStudioResource::collection($theaterStudions);
+                
+                default:
+                    # code...
+                    break;
+            }
+        }
         return $data;
     }
 }

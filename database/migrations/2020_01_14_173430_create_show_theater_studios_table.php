@@ -16,6 +16,7 @@ class CreateShowTheaterStudiosTable extends Migration
         Schema::create('show_theater_studios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('show_id');
+            $table->unsignedBigInteger('theater_id');
             $table->unsignedBigInteger('studio_id');
             $table->time('start_time');
             $table->time('end_time');

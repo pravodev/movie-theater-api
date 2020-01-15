@@ -36,6 +36,7 @@ class ShowSeeder extends Seeder
                     $show_time = new ShowTheaterStudio;
                     $show_time->show_id = $show->id;
                     $show_time->studio_id = $studio->id;
+                    $show_time->theater_id = $theater->id;
                     $show_time->start_time = $show->date->copy()->addHour($faker->numberBetween(1,24));
                     $show_time->end_time = $show_time->start_time->copy()->addMinute($movie->duration);
                     $show_time->total_price = $faker->randomElement([20000, 50000, 90000]);

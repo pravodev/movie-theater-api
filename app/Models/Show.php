@@ -12,6 +12,11 @@ class Show extends Model
         return $this->belongsTo(Movie::class ,'movie_id');
     }
 
+    public function theaterStudios()
+    {
+        return $this->hasMany(ShowTheaterStudio::class);
+    }
+    
     public function getData()
     {
         $request = request();
