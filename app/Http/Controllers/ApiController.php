@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\JsonRequest as Request;
 
 class ApiController extends Controller
 {
@@ -38,7 +38,11 @@ class ApiController extends Controller
      */
     public function index()
     {
-        return $this->getResource()::collection($this->getModel()->paginate());
+        $model = $this->getModel();
+        if(\method_exists($model, 'getData')){
+            $model = $model->getData();
+        }
+        return $this->getResource()::collection($model->paginate());
     }
 
     /**
