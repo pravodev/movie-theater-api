@@ -29,8 +29,8 @@ class ShowResource extends JsonResource
                         return $theaterStudio->first()->theater;
                     }));
                     break;
-                case 'studios':
-                    $data['studios'] = ShowTheaterStudioResource::collection($theaterStudions);
+                case 'show_times':
+                    $data['show_times'] = ShowTimeResource::collection($theaterStudions);
                 
                 default:
                     # code...

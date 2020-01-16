@@ -21,4 +21,5 @@ Route::apiResource('movies', 'MovieController');
 Route::apiResource('genres', 'GenreController');
 Route::apiResource('casts', 'CastController');
 Route::apiResource('theaters', 'TheaterController');
-Route::apiResource('show-times', 'ShowTimeController');
+Route::apiResource('shows', 'ShowController');
+Route::apiResource('ticket-reservations', 'TicketReservationController');

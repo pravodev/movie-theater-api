@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Show;
-use App\Models\ShowTheaterStudio;
+use App\Models\ShowTime;
 use App\Models\Movie;
 use App\Models\Theater;
 use Faker\Factory;
@@ -21,7 +21,7 @@ class ShowSeeder extends Seeder
             $faker = Factory::create();
             $movies = Movie::all();
             $theaters = Theater::all();
-            $totalData = 12;
+            $totalData = 100;
 
             for ($i=0; $i < $totalData; $i++) { 
                 $movie = $movies->random();
@@ -33,7 +33,7 @@ class ShowSeeder extends Seeder
                 $theater = $theaters->random();
                 
                 foreach($theater->studios as $studio){
-                    $show_time = new ShowTheaterStudio;
+                    $show_time = new ShowTime;
                     $show_time->show_id = $show->id;
                     $show_time->studio_id = $studio->id;
                     $show_time->theater_id = $theater->id;

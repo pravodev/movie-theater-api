@@ -16,7 +16,7 @@ class CreateTheatersTable extends Migration
         Schema::create('theaters', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('about')->nullable();
+            $table->text('about')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();

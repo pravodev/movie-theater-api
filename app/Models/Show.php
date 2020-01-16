@@ -14,7 +14,7 @@ class Show extends Model
 
     public function theaterStudios()
     {
-        return $this->hasMany(ShowTheaterStudio::class);
+        return $this->hasMany(ShowTime::class);
     }
     
     public function getData()
