@@ -83,6 +83,10 @@
                     <strong style="font-weight:bold">Now Playing <i class="fa fa-play-circle"></i></strong>
                     <br>
                     <br>
+                    <div id="loading" style="text-align:center">
+                        Loading <br/>
+                        <i class="fa fa-spin fa-spinner" style="font-size:30px"></i>
+                    </div>
                     <div class="d-flex" style="flex-wrap:wrap" id="movieNowPlaying">
                         
                     </div>
@@ -201,10 +205,14 @@
                     })
                 }
                 
-                
+                $('#loading').show()
                 fetch('/api/shows?date=now')
                     .then(response => response.json())
-                    .then(data => renderToNowPlaying(data.data))
+                    .then(data => {
+                        renderToNowPlaying(data.data)
+                        $('#loading').hide()
+
+                    })
                     .catch(error => {
                         console.log("TCL: error", error)
                         
