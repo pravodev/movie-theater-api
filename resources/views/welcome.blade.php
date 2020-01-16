@@ -105,8 +105,11 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <h4>2020-01-19</h4>
-
+                    <h4 id="dateDetail"></h4>
+                    <div id="loadingDetail" style="text-align:center">
+                        Loading <br/>
+                        <i class="fa fa-spin fa-spinner" style="font-size:30px"></i>
+                    </div>
                     <div class="row">
                         <div class="col-md-6" id="detailShow">
                             
@@ -193,10 +196,16 @@
                         var index = $(this).data('index')
                         var data = shows[index]
                         $('#movieTitle').html(data.movie_title)
-
+                        $('#dateDetail').html(data.date)
+                        $('#detailShow').html('')
+                        $('#detailShowTime').html('')
+                        $('#loadingDetail').show();
                         fetch(`/api/shows/${data.id}?include=show_times`)
                             .then(response => response.json())
-                            .then(data => renderShowTimes(data))
+                            .then(data => {
+                                renderShowTimes(data)
+                                $('#loadingDetail').hide();
+                            })
                             .catch(error => {
                                 console.log('error showTimes', error)
                             })
