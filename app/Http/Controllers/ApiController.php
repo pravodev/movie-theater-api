@@ -89,7 +89,17 @@ class ApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(method_exists($this->model, 'updateData')){
+            $model = $this->model::updateData($request->all());
+        }else{
+            $model = new $this->model;
+            $attributes = $request->only($model->getFillable());
+            $model->fill($attributes);
+            $model->save();
+        }
+        $classResource = $this->getResource();
+
+        return new $classResource($model);
     }
 
     /**
@@ -100,6 +110,12 @@ class ApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = $this->getModel()->findOrFail($id);
+        if(method_exists($this->model, 'deleteData')){
+            $model = $this->model::deleteData($model);
+        }else{
+            $model->delete();
+        }
+        return response()->json([], 204);
     }
 }
