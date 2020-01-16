@@ -104,15 +104,18 @@
                     <h4>2020-01-19</h4>
 
                     <div class="row">
-                        <div class="col-md-6" id="detailShowTime">
+                        <div class="col-md-6" id="detailShow">
                             
+                        </div>
+                        <div class="col-md-6" id="detailShowTime">
+                            <h4>Show TImes</h4>
+
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>
@@ -130,10 +133,12 @@
                     let {show_times} = data
                     let groupByTheater  = _.groupBy(show_times, (data) => data.theater_id)
                     console.log("TCL: renderShowTimes -> groupByTheater", groupByTheater)
-                    const detailElement = $('#detailShowTime')
+                    const detailElement = $('#detailShow')
+                    const detailShowTime = $('#detailShowTime');
+                    detailShowTime.html('')
                     const html = _.map(groupByTheater, ((theater) => {
-                        const timesEl = theater.map(times => (`
-                            <button class="btn btn-sm btn-warning">${times.start_time}</button>
+                        const timesEl = theater.map((times, index) => (`
+                            <button class="btn btn-sm btn-warning btn_detail" data-index="${index}" data-theater="${times.theater_id}">${times.start_time}</button>
                         `))
                         return `
                             <div>
@@ -144,8 +149,22 @@
                     })).join('')
                     
                     detailElement.html(html)
-                    console.log("TCL: renderShowTimes -> groupByTheater", groupByTheater)
-                    console.log("TCL: renderShowTimes -> show_times", show_times)
+
+                    $('.btn_detail').click(function(){
+                        const id = $(this).data('index')
+                        const theaterId = $(this).data('theater')
+                        const data = groupByTheater[theaterId][id]
+                        detailShowTime.html(`
+                            <h4>${data.theater_name}</h4>
+                            Start : ${data.start_time}<br/>
+                            End : ${data.end_time}<br/>
+                            Price: ${data.total_price}<br/>
+                            <button class="btn btn-primary">Reservation</button>
+                            <input class="form-control" placeholder="Person"/>
+                            <button class="btn btn-warning">Booking !</button>
+
+                        `)
+                    })
 
                 }
 
@@ -168,9 +187,7 @@
 
                     $('.showModal').on('click', function(){
                         var index = $(this).data('index')
-                        console.log("TCL: renderToNowPlaying -> index", index)
                         var data = shows[index]
-                        console.log("TCL: renderToNowPlaying -> data", data)
                         $('#movieTitle').html(data.movie_title)
 
                         fetch(`/api/shows/${data.id}?include=show_times`)
