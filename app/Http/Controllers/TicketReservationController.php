@@ -15,7 +15,9 @@ class TicketReservationController extends ApiController
     {
         return [
             'show_id' => 'required',
-            // 'studio_id' =>
+            'show_time_id' => 'required',
+            'theater_id' => 'required',
+            'persons' => 'required'
         ];
     }
 }
